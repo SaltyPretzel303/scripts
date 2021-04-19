@@ -5,6 +5,12 @@ import json  # used to parse and prettyPrint events
 import sys
 import pika  # rabbitmq client
 import argparse  # util used to parse cli arguments
+from os import environ  # used for reading environment variables
+
+ENV_ADDRESS = 'BROKER_ADDRESS'
+ENV_PORT = "BROKER_PORT"
+ENV_TOPICS = "TARGET_TOPICS"  # comma separated values
+ENV_FILTER = "TARGET_FILTER"
 
 DEFAULT_TOPICS = [
     "service_lifetime",
@@ -18,6 +24,86 @@ DEFAULT_FILTER = "#"
 
 DEFAULT_BROKER_ADDRESS = "localhost"
 DEFAULT_BROKER_PORT = 5672
+
+# region helper methods for resolving variables
+# priority: env_variables -> cli_input -> default_values
+
+
+def resolveAddress(cli_input):
+    address = environ.get(ENV_ADDRESS)
+    if(address is not None and address != ""):
+
+        print("Using addres provided with ENV variable ... ")
+        return address
+
+    if (hasattr(cli_input, "broker_address") and
+            (cli_input.broker_address is not None) and (cli_input.broker_address != "")):
+
+        print("Using address provided with cli arg ... ")
+        return cli_input.broker_address
+
+    print("Using default address value ... ")
+    return DEFAULT_BROKER_ADDRESS
+
+
+def resolvePort(cli_input):
+    port = environ.get(ENV_PORT)
+    if(port is not None):
+
+        print("Using port provided with ENV variable ... ")
+        return port
+
+    if (hasattr(cli_input, "broker_port") and
+            (cli_input.broker_port is not None) and (cli_input.broker_port != "")):
+
+        print("Using port provided with cli arg ... ")
+        return cli_input.broker_port
+
+    print("Using default port value ... ")
+    return DEFAULT_BROKER_PORT
+
+
+def resolveTopics(cli_input):
+    topics_str = environ.get(ENV_TOPICS)
+    if(topics_str is not None):
+
+        topics_str.replace(" ", '')  # remove all spaces
+        topics_arr = topics_str.split(",")
+
+        print("Using topics provided with ENV variable ... ")
+        return topics_arr
+
+    if(hasattr(cli_input, "topic") and
+       (cli_input.topic is not None) and ((cli_input.topic != ""))):
+
+        cli_input.topic.replace(" ", "")
+        topics = cli_input.topic.split(",")
+
+        print("Using topics provided with cli arg ... ")
+        return topics
+
+    print("Using default topics ... ")
+    return DEFAULT_TOPICS
+
+
+def resolveFilter(cli_input):
+    filter = environ.get(ENV_FILTER)
+    if(filter is not None):
+
+        print("Using filter provided with ENV variable ... ")
+        return filter
+
+    if (hasattr(cli_input, "filter") and
+            (cli_input.filter is not None) and (cli_input.filter != "")):
+
+        print("Using filter provided with cli arg ... ")
+        return cli_input.filter
+
+    print("Using default filter ... ")
+    return DEFAULT_FILTER
+
+# endregion
+
 
 parser = argparse.ArgumentParser(
     "Listen on specific topic with specific filter.\n\
@@ -45,21 +131,8 @@ parser.add_argument("--filter",
 
 cli_input = parser.parse_args()
 
-# resolve broker address
-broker_address = DEFAULT_BROKER_ADDRESS
-if (hasattr(cli_input, "broker_address") and
-        (cli_input.broker_address is not None) and
-        (not cli_input.broker_address)):
-
-    broker_address = cli_input.broker_address
-
-# resolve broker port
-broker_port = DEFAULT_BROKER_PORT
-if (hasattr(cli_input, "broker_port") and
-        (cli_input.broker_port is not None) and
-        (not cli_input.broker_port)):
-
-    broker_address = cli_input.broker_port
+broker_address = resolveAddress(cli_input)
+broker_port = resolvePort(cli_input)
 
 print(f"Connecting with: {broker_address}:{broker_port}")
 
@@ -67,19 +140,8 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(host=broker_addre
                                                                port=broker_port))
 channel = connection.channel()
 
-topics = DEFAULT_TOPICS
-if(hasattr(cli_input, "topic") and
-   (cli_input.topic is not None) and
-   (not cli_input.topic)):
-
-    topics = [cli_input.topic]
-
-filter = DEFAULT_FILTER
-if(hasattr(cli_input, "filter") and
-        (cli_input.filter is not None) and
-        (not cli_input.filter)):
-
-    filter = cli_input.filter
+topics = resolveTopics(cli_input)
+filter = resolveFilter(cli_input)
 
 for single_topic in topics:
     channel.exchange_declare(single_topic,
@@ -96,18 +158,19 @@ for single_topic in topics:
                        filter)
 
     def event_callback(ch, method, properties, body):
-        print(F"Topic: {single_topic}\nFilter: {filter}")
-
         txt_content = body.decode("utf-8")
-        json_obj = json.loads(txt_content)
-        json_output = json.dumps(json_obj, indent=4)
 
-        print(f"{json_output}")
+        print(txt_content)  # this will print json in one line
+
+        # next section will print json with propper formating
+        # json_obj = json.loads(txt_content)
+        # json_output = json.dumps(json_obj, indent=4)
+        # print(f"{json_output}")
+
         print()  # just an empty line
 
     channel.basic_consume(queue_name,
                           event_callback)
-
 
 # handling ctrl+c (SIGINT)
 def sig_handler(sig, frame):
@@ -120,7 +183,7 @@ def sig_handler(sig, frame):
 
     if(connection is not None and connection.is_open):
         connection.close()
-        print("Conneciton closed ... ")
+        print("Connection closed ... ")
 
     sys.exit(0)
 

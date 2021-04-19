@@ -1,0 +1,54 @@
+
+# disable readline arguments (alt+num)
+# for i in "-" {0..9}; do bind -r "\e$i"; done
+# note: previous line will disable readline arguments 
+# but after this alt+num can't be used to switch to $num tab
+
+# list all available commands
+alias list_commands="compgen -c"
+# they won't be enabled on wakeup
+# next command will restart "audio service"
+alias restart_audio="pulseaudio -k"
+
+# 'copy' command input to the clipboard
+# use 'xclip -out' to display/output it (clipboard content) 
+alias clipit='xargs -0 echo -n | xclip -selection clipboard'
+
+# print out clipboard content to standard output 
+alias clipout='xclip -out'
+
+# uncomment next line in order to allow omnisharp to use mono insted .net-[some.version]
+# export FrameworkPathOverride=/usr/lib/mono/msbuild/Current
+
+# adds line number to grep results 
+alias ngrep='grep --line-number'
+
+# shudown instantly 
+alias down_now='shutdown --poweroff now'
+
+# go to sleep
+# alias goto_sleep='systemctl hibernate'
+# doesn't work, requires a lot of swap space (for the whole ram)
+# and I only have 2GB of swap
+
+# start docker 
+alias docker_up='systemctl start docker.service'
+
+# will allow using aliases with sudo infront 
+# (there is a blank space at the end after sudo)
+alias sudo='sudo '
+
+# will keep the coloring of matched strings later in pipeline
+alias cgrep='grep --color=always'
+
+# add line numbers to output
+alias ncat='cat --number'
+
+# restart gnome-shell
+alias gnome_restart='busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s "Meta.restart(\"Restarting ... \")"'
+
+# find from current dir and ignore case (case-insensitive search)
+alias ifind='find ./ -iname'
+
+# invert match 
+alias igrep='grep --invert-match'
