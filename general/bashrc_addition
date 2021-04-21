@@ -15,7 +15,14 @@ alias restart_audio="pulseaudio -k"
 # xclip -sel c -> selection clipboard, accessed by ctrl+v (or ctrl+shift+v in terminal)
 # xclip -sel p -> selection primary, accesed by shift+insert (or ctrl+v in editors other than terminal)
 # -f will print content to standart output and allow further piping  
-alias clipit='xargs -0 echo -n | xclip -sel c -f | xclip -sel p -f'
+# alias clipit='xargs -0 echo -n | xclip -sel c -f | xclip -sel p -f'
+# this approach will leave xclip process running and will slow down shutting down terminal win
+
+# new approach for clipit using xsel
+# xsel -p -> store output of xargs in primary selection (accessed with shift+insert or middle click)
+# xsel -p | xsel -b -> prints the content of primary selection and store it in clipboard selection
+# 			accessed with ctrl+v (ctrl+shift+v in terminal)
+alias clipit='xargs -0 echo -n | xsel -p; xsel -p | xsel -b'
 
 # print out clipboard content to standard output 
 alias clipout='xclip -out'
