@@ -1,3 +1,4 @@
+# ============ "CUSTOMIZATION" ============ 
 
 # disable readline arguments (alt+num)
 # for i in "-" {0..9}; do bind -r "\e$i"; done
@@ -11,8 +12,10 @@ alias list_commands="compgen -c"
 alias restart_audio="pulseaudio -k"
 
 # 'copy' command input to the clipboard
-# use 'xclip -out' to display/output it (clipboard content) 
-alias clipit='xargs -0 echo -n | xclip -selection clipboard'
+# xclip -sel c -> selection clipboard, accessed by ctrl+v (or ctrl+shift+v in terminal)
+# xclip -sel p -> selection primary, accesed by shift+insert (or ctrl+v in editors other than terminal)
+# -f will print content to standart output and allow further piping  
+alias clipit='xargs -0 echo -n | xclip -sel c -f | xclip -sel p -f'
 
 # print out clipboard content to standard output 
 alias clipout='xclip -out'
@@ -52,3 +55,7 @@ alias ifind='find ./ -iname'
 
 # invert match 
 alias igrep='grep --invert-match'
+
+# editor that will open after ctrl+x -> ctrl+e
+export VISUAL=vim
+
