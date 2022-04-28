@@ -5,7 +5,7 @@ RUN apt update; \
 
 RUN useradd -r -s /bin/bash -g root -G sudo ssh_user
 
-RUN echo 'ssh_user:0312n' | chpasswd
+RUN echo 'ssh_user:ssh_password' | chpasswd
 
 RUN service ssh start
 
