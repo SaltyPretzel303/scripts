@@ -4,14 +4,19 @@ import signal  # used to trap SIGINT
 import json  # used to parse and prettyPrint events
 import sys
 import pika  # rabbitmq client
+from pika.credentials import PlainCredentials
 import argparse  # util used to parse cli arguments
 from os import environ  # used for reading environment variables
 
 ENV_ADDRESS = 'BROKER_ADDRESS'
 ENV_PORT = "BROKER_PORT"
+ENV_V_HOST = "V_HOST"
 ENV_TOPICS = "TARGET_TOPICS"  # comma separated values
-ENV_FILTER = "TARGET_FILTER"
 
+ENV_USERNAME = "BROKER_USERNAME"
+ENV_PASSWORD = "BROKER_PASSWORD"
+
+ENV_FILTER = "TARGET_FILTER"
 DEFAULT_TOPICS = [
     "service_lifetime",
     "service_log",
@@ -24,6 +29,10 @@ DEFAULT_FILTER = "#"
 
 DEFAULT_BROKER_ADDRESS = "localhost"
 DEFAULT_BROKER_PORT = 5672
+DEFAULT_BROKER_V_HOST = ""
+
+DEFAULT_USERNAME = "guest"
+DEFAULT_PASSWORD = "guest"
 
 # region helper methods for resolving variables
 # priority: env_variables -> cli_input -> default_values
@@ -61,6 +70,55 @@ def resolvePort(cli_input):
 
     print("Using default port value ... ")
     return DEFAULT_BROKER_PORT
+
+
+def resolveVHost(cli_input):
+    v_host = environ.get(ENV_V_HOST)
+    if(v_host is not None):
+
+        print("Using vHost provided with ENV varibale ... ")
+        return v_host
+
+    if(hasattr(cli_input, "vhost") and
+            (cli_input.vhost is not None) and (cli_input.broker_port != "")):
+
+        print("Using vhost provided with cli arg ... ")
+        return cli_input.vhost
+
+    print("Using default vhost value ... ")
+    return DEFAULT_BROKER_V_HOST
+
+
+def resolveUsername(cli_input):
+    username = environ.get(ENV_USERNAME)
+    if (username is not None):
+        print("Using username provided with ENV variable ... ")
+        return username
+
+    if (hasattr(cli_input, "username") and
+            (cli_input.username is not None) and (cli_input.username != "")):
+
+        print("Using username provided with cli arg ... ")
+        return cli_input.username
+
+    print("Using default username ... ")
+    return DEFAULT_USERNAME
+
+
+def resolvePassword(cli_input):
+    password = environ.get(ENV_PASSWORD)
+    if (password is not None):
+        print("Using password provided with ENV variable ... ")
+        return password
+
+    if (hasattr(cli_input, "password") and
+            (cli_input.password is not None) and (cli_input.password != "")):
+
+        print("Using password provided with cli arg ... ")
+        return cli_input.password
+
+    print("Using default password ... ")
+    return DEFAULT_PASSWORD
 
 
 def resolveTopics(cli_input):
@@ -121,6 +179,21 @@ parser.add_argument("--port",
                     required=False,
                     help="Message broker port. Default: 5672")
 
+parser.add_argument("--vhost",
+                    dest="vhost",
+                    required=False,
+                    help="Message broker virtual host. Default /")
+
+parser.add_argument("--username",
+                    dest="username",
+                    required=False,
+                    help="Username. Default 'guest'")
+
+parser.add_argument("--password",
+                    dest="password",
+                    required=False,
+                    help="Pasword. Default 'guest'")
+
 parser.add_argument("--topic",
                     dest="topic",
                     help="Topic to listen on. Default: all available topics (hardcoded)")
@@ -133,20 +206,38 @@ cli_input = parser.parse_args()
 
 broker_address = resolveAddress(cli_input)
 broker_port = resolvePort(cli_input)
+broker_v_host = resolveVHost(cli_input)
+
+username = resolveUsername(cli_input)
+password = resolvePassword(cli_input)
 
 print(f"Connecting with: {broker_address}:{broker_port}")
 
+creds = PlainCredentials(username=username, password=password)
 connection = pika.BlockingConnection(pika.ConnectionParameters(host=broker_address,
-                                                               port=broker_port))
+                                                               port=broker_port,
+                                                               virtual_host=broker_v_host,
+                                                               credentials=creds))
 channel = connection.channel()
 
 topics = resolveTopics(cli_input)
 filter = resolveFilter(cli_input)
 
+print("Address: " + broker_address)
+print("Port: " + str(broker_port))
+print("VHost: " + broker_v_host)
+print("Topics: ")
+for topic in topics:
+    print(" -> "+topic)
+
+print("Filter: " + filter)
+
+print("----------------------------------------")
+
 for single_topic in topics:
     channel.exchange_declare(single_topic,
                              "topic",
-                             durable=True,
+                             durable=False,
                              auto_delete=True,
                              arguments=None)
 
@@ -173,6 +264,8 @@ for single_topic in topics:
                           event_callback)
 
 # handling ctrl+c (SIGINT)
+
+
 def sig_handler(sig, frame):
 
     print("\nCancellation requested ... ")

@@ -11,7 +11,7 @@
 # in this case bus=1 port=5, value to pass 1-5
 
 
-#port='usb1' # this bill restart while usb hub I think
+#port='usb1' # this will restart whole usb hub I think
 port='1-7' # this should restart single port (far right usb2.0)
 
 echo "Working with port: $port ..."
