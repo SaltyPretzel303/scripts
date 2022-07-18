@@ -24,10 +24,11 @@ DEFAULT_TOPICS = [
     "sensor_registry",
     "sensor_reader"
 ]
+# topics from the saltypretzel303/soa project 
 
 DEFAULT_FILTER = "#"
 
-DEFAULT_BROKER_ADDRESS = "localhost"
+DEFAULT_BROKER_ADDRESS = "127.0.0.1"
 DEFAULT_BROKER_PORT = 5672
 DEFAULT_BROKER_V_HOST = ""
 
@@ -51,7 +52,7 @@ def resolveAddress(cli_input):
         print("Using address provided with cli arg ... ")
         return cli_input.broker_address
 
-    print("Using default address value ... ")
+    print("Using default address value: " + DEFAULT_BROKER_ADDRESS)
     return DEFAULT_BROKER_ADDRESS
 
 
@@ -68,7 +69,7 @@ def resolvePort(cli_input):
         print("Using port provided with cli arg ... ")
         return cli_input.broker_port
 
-    print("Using default port value ... ")
+    print("Using default port value: " + str(DEFAULT_BROKER_PORT))
     return DEFAULT_BROKER_PORT
 
 
@@ -85,7 +86,7 @@ def resolveVHost(cli_input):
         print("Using vhost provided with cli arg ... ")
         return cli_input.vhost
 
-    print("Using default vhost value ... ")
+    print("Using default vhost value: " + DEFAULT_BROKER_V_HOST)
     return DEFAULT_BROKER_V_HOST
 
 
@@ -101,7 +102,7 @@ def resolveUsername(cli_input):
         print("Using username provided with cli arg ... ")
         return cli_input.username
 
-    print("Using default username ... ")
+    print("Using default username: " + DEFAULT_USERNAME)
     return DEFAULT_USERNAME
 
 
@@ -117,7 +118,7 @@ def resolvePassword(cli_input):
         print("Using password provided with cli arg ... ")
         return cli_input.password
 
-    print("Using default password ... ")
+    print("Using default password: " + DEFAULT_PASSWORD)
     return DEFAULT_PASSWORD
 
 
@@ -140,7 +141,7 @@ def resolveTopics(cli_input):
         print("Using topics provided with cli arg ... ")
         return topics
 
-    print("Using default topics ... ")
+    print("Using default topics: " + str(DEFAULT_TOPICS))
     return DEFAULT_TOPICS
 
 
@@ -157,7 +158,7 @@ def resolveFilter(cli_input):
         print("Using filter provided with cli arg ... ")
         return cli_input.filter
 
-    print("Using default filter ... ")
+    print("Using default filter:  " + DEFAULT_FILTER)
     return DEFAULT_FILTER
 
 # endregion
@@ -196,7 +197,7 @@ parser.add_argument("--password",
 
 parser.add_argument("--topic",
                     dest="topic",
-                    help="Topic to listen on. Default: all available topics (hardcoded)")
+                    help="Comma separated list of the topics to listen on. Default: topics from the soa project")
 
 parser.add_argument("--filter",
                     dest="filter",
@@ -211,17 +212,23 @@ broker_v_host = resolveVHost(cli_input)
 username = resolveUsername(cli_input)
 password = resolvePassword(cli_input)
 
+print("") # new line
 print(f"Connecting with: {broker_address}:{broker_port}")
+print("") # new line
 
 creds = PlainCredentials(username=username, password=password)
-connection = pika.BlockingConnection(pika.ConnectionParameters(host=broker_address,
-                                                               port=broker_port,
-                                                               virtual_host=broker_v_host,
-                                                               credentials=creds))
+conn_params = pika.ConnectionParameters(host=broker_address,
+                                        port=broker_port,
+                                        virtual_host=broker_v_host,
+                                        credentials=creds)
+
+connection = pika.BlockingConnection(conn_params)
 channel = connection.channel()
 
 topics = resolveTopics(cli_input)
 filter = resolveFilter(cli_input)
+
+print("") # new line
 
 print("Address: " + broker_address)
 print("Port: " + str(broker_port))
@@ -231,8 +238,8 @@ for topic in topics:
     print(" -> "+topic)
 
 print("Filter: " + filter)
-
-print("----------------------------------------")
+print("") # new line
+print("........... Listening ...........")
 
 for single_topic in topics:
     channel.exchange_declare(single_topic,
