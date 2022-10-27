@@ -66,3 +66,10 @@ alias igrep='grep --invert-match'
 # editor that will open after ctrl+x -> ctrl+e
 export VISUAL=vim
 
+# case insensitive completion
+# doesn't really work 
+bind -s 'set completion-ignore-case on'
+
+alias defaults='cat /usr/share/applications/defaults.list'
+
+
