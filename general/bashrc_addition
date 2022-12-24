@@ -72,4 +72,5 @@ bind -s 'set completion-ignore-case on'
 
 alias defaults='cat /usr/share/applications/defaults.list'
 
+alias tout='tmux show-buffer'
 
