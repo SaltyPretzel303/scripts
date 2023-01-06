@@ -1,0 +1,15 @@
+version: '3.5'
+
+
+
+services:
+
+  mysql_db:
+    container_name: mysql_db
+    build:
+      context: ./
+      dockerfile: ./UserDb-MySql.Dockerfile
+    image: gg/mysql_db
+    ports:
+    - "0.0.0.0:3306:3306"
+
