@@ -74,3 +74,13 @@ alias defaults='cat /usr/share/applications/defaults.list'
 
 alias tout='tmux show-buffer'
 
+alias docker_names='docker ps --format "{{.Names}}"'
+alias docker_ports='docker ps --format "{{.Names}}: {{.Ports}}"'
+alias dockers='docker_names'
+
+alias ffprobe='ffprobe -hide_banner'
+alias ffmpeg='ffmpeg -hide_banner'
+alias ffplay='ffplay -hide_banner'
+
+export PYTHONPATH=${PYTHONPATH}:/home/nemanja/workspace
+

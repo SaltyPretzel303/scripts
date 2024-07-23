@@ -16,12 +16,19 @@ fi
 
 ################ MAIN ####################
 
-MostRecentWID="$(xdotool search --class --name "$ExecutableBase" | tail -1 2> /dev/null)"
+# the most recently accessed window on this desktop/session
+current_desktop="$(xdotool get_desktop)"
+MostRecentWID="$(xdotool search --class --desktop "$current_desktop" --name "$ExecutableBase" | tail -1 2> /dev/null)"
 
 if [[ -z "$MostRecentWID" ]]; then
-  echo "$ExecutableBase not found. Launching new window."
-  "$Executable" > /dev/null 2>&1 &
-  disown
+	echo "$ExecutableBase not found in this session, will search in all."
+	MostRecentWID="$(xdotool search --class --name "$ExecutableBase" | tail -1 2> /dev/null)"
+fi 
+
+if [[ -z "$MostRecentWID" ]]; then
+	echo "$ExecutableBase not found. Launching new window."
+  	"$Executable" > /dev/null 2>&1 &
+  	disown
 else
   echo "Focusing existing instance of $ExecutableBase."
   # use brute-force approach if activating most recent WID doesn't work
