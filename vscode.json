@@ -1,0 +1,470 @@
+// save at ~/.config/Code/User/settings.json
+{
+	"workbench.startupEditor": "newUntitledFile",
+	"java.jdt.ls.java.home": "/usr/lib/jvm/default-java",
+	"editor.foldingHighlight": false,
+	"extensions.ignoreRecommendations": true,
+	"workbench.tree.indent": 12,
+	"editor.tabCompletion": "on",
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"editor.renderLineHighlight": "line",
+	"editor.acceptSuggestionOnCommitCharacter": false,
+	"editor.quickSuggestions": {
+		"other": false,
+		"comments": false,
+		"strings": false
+	},
+	"editor.acceptSuggestionOnEnter": "on",
+	"editor.suggestOnTriggerCharacters": false,
+	// "editor.quickSuggestionsDelay": 500,
+	"editor.wordBasedSuggestions": "off",
+	"[java]": {
+		// "editor."
+	},
+	"gitlens.currentLine.enabled": false,
+	"gitlens.codeLens.enabled": false,
+	"editor.codeLens": false,
+	"editor.tokenColorCustomizations": {
+		"[i Solarised]": {
+			"comments": "#deba6c",
+			"strings": "#7e4f0d"
+		},
+		"[Visual Studio Dark]": {
+			// "comments": "#4a6d4a",
+			"comments": "#355f35",
+			"textMateRules": [
+				{
+					"scope": [
+						"constant.language",
+						"entity.name.tag",
+						"markup.bold",
+						"markup.heading",
+						"markup.changed",
+						"meta.preprocessor",
+						"entity.anme.function.preprocessor",
+						"meta.diff.header",
+						"storage",
+						"storage.type",
+						"storage.modifier",
+						"keyword.operator.noexcept",
+						"punctuation.definition.template-expression.begin",
+						"punctuation.definition.template-expression.end",
+						"punctuation.section.embedded",
+						"keyword",
+						"keyword.control",
+						// I think next ones are the only ones i want
+						"keyword.operator.new",
+						"keyword.operator.expression",
+						"keyword.operator.cast",
+						"keyword.operator.sizeof",
+						"keyword.operator.alignof",
+						"keyword.operator.typeid",
+						"keyword.operator.alignas",
+						"keyword.operator.instanceof",
+						"keyword.operator.logical.python",
+						"keyword.operator.wordlike",
+						// down to this line
+						"punctuation.section.embedded.begin.php",
+						"punctuation.section.embedded.end.php"
+					],
+					"settings": {
+						"foreground": "#ca9e81",
+						// "foreground": "#569cd6" original color
+						// "foreground": "#569cd6"
+					}
+				},
+				{
+					"name": "this.self",
+					"scope": "variable.language",
+					"settings": {
+						"foreground": "#ca9e81"
+						// "foreground": "#569cd6" original color
+					}
+				},
+			]
+		},
+		"[Visual Studio Light]": {
+			"comments": "#133a13a4",
+		},
+		"[Tranquility Base Dark]": {
+			"comments": "#f0ceb249"
+		},
+		"[Tranquility Base Light]": {
+			"comments": "#f8ab37b6"
+		},
+		"[Night]": {
+			"comments": "#4f7734"
+		}
+	},
+	"editor.tabSize": 4,
+	"workbench.colorCustomizations": {
+		// ctrl+e menu and alt+enter menu (and I guess many other)
+		"list.activeSelectionBackground": "#ff000040",
+		// "editorInfo.foreground": "#ff000000", // squiggly line under TODO 
+		"editorIndentGuide.activeBackground1": "#00ba7670", // current block
+		// "editorIndentGuide.background1": "#ff000000", // just transparent,
+		"tab.activeBorder": "#44daff",
+		"tab.activeBorderTop": "#44daff",
+		"editorCursor.foreground": "#b63b07",
+		"editorCursor.background": "#ffffff",
+		"terminalCursor.background": "#fff",
+		"terminalCursor.foreground": "#b9531d",
+		"[8-Colour-Dark]": {
+			"editorWhitespace.foreground": "#ff000000"
+		},
+		"[Gruvbox Material Light]": {
+			"editor.selectionBackground": "#e16b6b8e",
+			"editor.selectionHighlightBackground": "#ff00006f",
+			"editor.findMatchBorder": "#ff0000"
+		},
+		"[Simple Ocean]": {
+			"editorCursor.foreground": "#ffae00",
+			"editor.selectionHighlightBackground": "#f9af0e82",
+			"editor.selectionBackground": "#ffcb2044",
+			"editorInfo.foreground": "#ff000000",
+		},
+		"[Theme + Dark Brown Theme]": {
+			"editorCursor.foreground": "#00dc04"
+		},
+		"[CustomLightTheme]": {
+			"editorInfo.foreground": "#ff000000"
+		},
+		"[Visual Studio Dark]": {
+			"list.activeSelectionBackground": "#ff000060",
+			// "editor.background": "#1f1d1d2d",
+			"editorIndentGuide.activeBackground1": "#00a2ff70", // current block
+			"editorIndentGuide.background1": "#ff000000", // just transparent,
+			// "editorWarning.foreground": "#00000000",
+			// "editorInfo.foreground": "#ff000000",
+			"editorInfo.foreground": "#105bff",
+			"editorCursor.foreground": "#239414",
+			"editorCursor.background": "#ffffff",
+			// "editor.foreground": "#e7e6e6",
+			"editor.selectionBackground": "#ff84002a"
+			// invisible wavy line under todo commends (and i guess other warnings)
+		},
+		"[Minimal]": {
+			"list.activeSelectionBackground": "#ff000060",
+			"editor.selectionBackground": "#9139d876",
+			"editor.findMatchBackground": "#9139d876",
+			// "editor.selectionHighlightBackground": "#ff0000"
+		},
+		"[Visual Studio Light]": {
+			"editor.selectionBackground": "#34dd2538",
+			"editorCursor.foreground": "#ff00d4",
+			// "editorInfo.foreground": "#ff000000",
+			"editor.background": "#f5f5f5"
+			// invisible wavy line under todo commends (and i guess other warnings)
+		},
+		"[Night]": {
+			"editor.selectionBackground": "#ff424244",
+			"editor.selectionHighlightBackground": "#ff000000",
+			"editor.selectionHighlightBorder": "#ff0000",
+			"editorError.foreground": "#ff0000", // squiggly line
+			"editorError.border": "#ff000000", // double underline (double 00 at the end so it is not visible)
+			"editorWarning.foreground": "#00000000",
+			"editorInfo.foreground": "#00000000",
+			"editor.background": "#0f131d",
+			"editorIndentGuide.activeBackground": "#ff000020", // current block
+			"editorIndentGuide.background": "#ff000000", // just transparent
+			"editorCursor.foreground": "#13bd03",
+			"editorCursor.background": "#ffffff"
+		},
+		"[Default High Contrast]": {
+			"editor.selectionBackground": "#ffffffaa",
+			"tab.border": "#ffffff00",
+			"editorGroup.border": "#ffffff00",
+		},
+		"[Tranquility Base Dark]": {
+			"editorSuggestWidget.selectedBackground": "#284e35",
+			"editorError.foreground": "#ff0000", // squiggly line
+			"editorError.border": "#ff000000", // double underline (double 00 at the end so it is not visible)
+			"editor.findMatchBackground": "#1ca044",
+			"editorIndentGuide.activeBackground1": "#ff330000", // current block
+			"editorIndentGuide.background1": "#ff000000", // just transparent,
+			"editorCursor.foreground": "#ffffff",
+			"editorCursor.background": "#000"
+		},
+		"[Tranquility Base Light]": {
+			"editor.background": "#e9e9e9"
+		},
+		"[Solarized Dark]": {
+			"editorIndentGuide.activeBackground1": "#ff000060", // current block
+			"editorIndentGuide.background1": "#ff000000", // just transparent,
+			"editor.findMatchBackground": "#ff000060",
+			"editor.selectionHighlightBackground": "#ff000040",
+			"editor.selectionBackground": "#ff000060"
+		},
+		"[Solarized Light]": {
+			"editorIndentGuide.activeBackground": "#00a2ff70", // current block
+			"editorIndentGuide.background": "#ff000000", // just transparent,
+			"editorCursor.foreground": "#000",
+			"editorCursor.background": "#fff",
+		},
+		"[Nord]": {
+			"editorInfo.foreground": "#ff000000",
+			"editorCursor.foreground": "#00ff00",
+			"editorCursor.background": "#161212"
+		},
+		"[Nord Deep]": {
+			"editorInfo.foreground": "#ff000000",
+			"editorCursor.foreground": "#03a803",
+			"editorCursor.background": "#3d3737",
+			"editor.selectionBackground": "#128bbb33"
+		},
+		"[Default High Contrast Light]": {
+			"editorError.border": "#ffffff00", // double underline under error
+			// "editorInfo.foreground": "#ff0000",
+			"editorInfo.border": "#0044ff"
+		},
+		"[Nord Wave]": {
+			"editor.selectionBackground": "#ff424246"
+		}
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"files.associations": {
+		"*.cu": "cpp"
+	},
+	"omnisharp.loggingLevel": "warning",
+	"[csharp]": {
+		"editor.defaultFormatter": "ms-dotnettools.csharp"
+	},
+	"[python]": {
+		"editor.autoClosingBrackets": "always",
+		"editor.wordBasedSuggestions": "off",
+		"editor.wordWrap": "off",
+	
+	},
+	"[typescript]": {
+		"editor.autoClosingBrackets": "always"
+	},
+	"window.title": "${rootName}${separator}${dirty}${activeFolderMedium}${separator}${activeEditorShort}",
+	"editor.minimap.enabled": false,
+	"editor.rulers": [
+		{
+			"color": "#eb37005b",
+			"column": 80
+		}
+	],
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"java.project.importOnFirstTimeStartup": "automatic",
+	"explorer.confirmDelete": false,
+	"java.configuration.updateBuildConfiguration": "automatic",
+	"cSpell.userWords": [
+		"acodec",
+		"adate",
+		"aiosqlite",
+		"anext",
+		"appsettings",
+		"asgi",
+		"Asoc",
+		"astar",
+		"Behaviour",
+		"bito",
+		"Bson",
+		"checkpw",
+		"cmap",
+		"cmcd",
+		"Comms",
+		"conds",
+		"conts",
+		"cooldown",
+		"Creds",
+		"curr",
+		"datas",
+		"dbmodel",
+		"dckr",
+		"Descs",
+		"dockerfiles",
+		"Doesnt",
+		"doker",
+		"dropwhile",
+		"edgelist",
+		"elfako",
+		"endregion",
+		"evalc",
+		"Evaluable",
+		"FAZA",
+		"fflags",
+		"ffplay",
+		"ffpyplayer",
+		"Fira",
+		"flvflags",
+		"gameserverproxy",
+		"getplayer",
+		"glassit",
+		"greatgenerals",
+		"groupby",
+		"Gson",
+		"gunicorn",
+		"hashpw",
+		"heur",
+		"Hsts",
+		"httpx",
+		"Iosevka",
+		"isready",
+		"jcode",
+		"jsonable",
+		"jsonify",
+		"jsonpickle",
+		"karbonara",
+		"libx",
+		"llocation",
+		"lucene",
+		"matplotlib",
+		"Mediat",
+		"Mediatr",
+		"mfcc",
+		"microservices",
+		"Milojka",
+		"mixins",
+		"mognoose",
+		"moleculer",
+		"mpegts",
+		"mqtt",
+		"myptr",
+		"ndigits",
+		"Neighbour",
+		"Neighbours",
+		"nemanja",
+		"neparni",
+		"networkx",
+		"Newtonsoft",
+		"nexts",
+		"nobuffer",
+		"nonintuitive",
+		"normalise",
+		"Normalised",
+		"Notif",
+		"numba",
+		"paho",
+		"parni",
+		"pidof",
+		"pids",
+		"Plyr",
+		"pollo",
+		"pomodoro",
+		"POSX",
+		"prebuiltui",
+		"prevs",
+		"prokuplje",
+		"pydantic",
+		"pylab",
+		"Pylance",
+		"pymongo",
+		"pyplot",
+		"rabbitmq",
+		"Rcvd",
+		"rdate",
+		"rpassword",
+		"Rpwd",
+		"rtmp",
+		"Rtmps",
+		"rtoi",
+		"runtimes",
+		"sdate",
+		"selectinload",
+		"signin",
+		"signo",
+		"signup",
+		"SIZEX",
+		"SIZEY",
+		"sokobanja",
+		"Sokolska",
+		"someverylongtexet",
+		"starlette",
+		"sttm",
+		"subsd",
+		"suprtokens",
+		"svalue",
+		"syncio",
+		"tboard",
+		"thingsboard",
+		"tnail",
+		"tnails",
+		"touple",
+		"unfocus",
+		"Unfollow",
+		"unreg",
+		"unregister",
+		"Unregistration",
+		"Unsub",
+		"uvicorn",
+		"vcodec",
+		"verticalalignment",
+		"vframes",
+		"vhost",
+		"videojs",
+		"Virt",
+		"webm",
+		"Werkzeug",
+		"wifi",
+		"WNOHANG",
+		"wssp"
+	],
+	"workbench.editorAssociations": {
+		"*.ipynb": "jupyter-notebook"
+	},
+	"center-editor-window.offset": 15,
+	"editor.cursorBlinking": "solid",
+	"editor.cursorStyle": "block",
+	"[Log]": {
+		"editor.wordWrap": "on"
+	},
+	"redhat.telemetry.enabled": false,
+	"window.customMenuBarAltFocus": false,
+	"terminal.integrated.fontSize": 14,
+	"terminal.integrated.fontFamily": "monospace",
+	"terminal.integrated.defaultLocation": "editor",
+	"terminal.integrated.cursorStyle": "block",
+	"terminal.integrated.cursorBlinking": false,
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"typescript.disableAutomaticTypeAcquisition": true,
+	"java.format.settings.profile": "Eclipse",
+	"java.format.settings.url": "/home/nemanja/.vscode/extensions/redhat.java-0.80.0/formatters/eclipse-formatter.xml",
+	"window.menuBarVisibility": "toggle",
+	"todo-tree.tree.showCountsInTree": true,
+	"workbench.editor.showTabs": "single",
+	"editor.inlineSuggest.enabled": true,
+	"editor.lightbulb.enabled": "off",
+	"editor.bracketPairColorization.enabled": false,
+	"java.project.referencedLibraries": [
+		"/home/nemanja/workspace/flex_cup/src/java-cup-11b-runtime.jar"
+	],
+	"todo-tree.highlights.defaultHighlight": {
+		"type": "none"
+	},
+	"cSpell.allowCompoundWords": true,
+	"git.openRepositoryInParentFolders": "never",
+	"editor.lineHeight": 19,
+	"editor.fontSize": 14.5,
+	"editor.fontFamily": "Consolas", // liberation mono 
+	"editor.fontLigatures": true,
+	"editor.fontVariations": true,
+	"java.completion.guessMethodArguments": "off",
+	"editor.smartSelect.selectSubwords": true,
+	"remote.SSH.remotePlatform": {
+		"192.168.239.128": "linux"
+	},
+	"editor.accessibilitySupport": "off",
+	"window.density.editorTabHeight": "compact",
+	"workbench.editor.tabSizing": "fit",
+	"window.enableMenuBarMnemonics": false,
+	"workbench.activityBar.location": "hidden",
+	
+	"editor.inlineSuggest.showToolbar": "onHover",
+	"rewrap.autoWrap.enabled": true,
+	"rewrap.wrappingColumn": 80,
+	"editor.suggest.matchOnWordStartOnly": false,
+	"editor.stickyScroll.enabled": true,
+	"css.lint.unknownAtRules": "ignore",
+	"workbench.editor.labelFormat": "medium",
+	"breadcrumbs.enabled": false,
+	"window.zoomLevel": -1.2,
+	"workbench.statusBar.visible": false,
+	"python.languageServer": "Pylance",
+	"workbench.colorTheme": "Visual Studio Light"
+}
